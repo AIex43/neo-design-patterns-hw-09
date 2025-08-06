@@ -1,5 +1,5 @@
-import { DataExporter } from './DataExporter';
-import fs from 'fs/promises';
+import { DataExporter } from "./DataExporter";
+import fs from "fs/promises";
 
 export class JsonExporter extends DataExporter {
   protected render(): void {
@@ -7,6 +7,6 @@ export class JsonExporter extends DataExporter {
   }
 
   protected async save(): Promise<void> {
-    await fs.writeFile('users.json', this.result, 'utf-8');
+    await fs.writeFile("users.json", this.result, "utf-8");
   }
 }

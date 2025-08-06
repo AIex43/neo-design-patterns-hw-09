@@ -1,21 +1,16 @@
-import { Exporter } from './Exporter';
+import { User } from "../data/UserData";
 
-export abstract class DataExporter implements Exporter {
-  protected data: any[] = [];
-  protected result: string = '';
+export abstract class DataExporter {
+  protected data: User[] = [];
+  protected result: string = "";
 
-  async export(): Promise<void> {
-    this.loadData();
-    this.render();
-    await this.save();
+  constructor(data: User[]) {
+    this.data = data;
   }
 
-  protected loadData(): void {
-    // У реальному проєкті тут можна було б завантажувати з БД або API.
-    this.data = [
-      { id: 1, name: "Alice", email: "alice@example.com", phone: "123456789" },
-      { id: 2, name: "Bob", email: "bob@example.com", phone: "987654321" },
-    ];
+  public async export(): Promise<void> {
+    this.render();
+    await this.save();
   }
 
   protected abstract render(): void;

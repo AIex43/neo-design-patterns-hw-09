@@ -1,0 +1,5 @@
+<users>
+  <user><id>1</id><name>Alice</name><email>alice@example.com</email><phone>123-456</phone></user>
+  <user><id>2</id><name>Bob</name><email>bob@example.com</email><phone>234-567</phone></user>
+  <user><id>3</id><name>Charlie</name><email>charlie@example.com</email><phone>345-678</phone></user>
+</users>

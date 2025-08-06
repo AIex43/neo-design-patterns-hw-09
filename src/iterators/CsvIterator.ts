@@ -1,27 +1,16 @@
-import fs from 'fs';
-import { UserData } from '../data/UserData';
+import fs from "fs";
 
-export class CsvIterator implements Iterable<UserData> {
-  private data: UserData[];
+export class CsvIterator implements Iterable<string> {
+  private lines: string[];
 
-  constructor(path: string) {
-    const content = fs.readFileSync(path, 'utf-8');
-    const lines = content.trim().split('\n').slice(1); // пропускаємо заголовок
-
-    this.data = lines.map(line => {
-      const [id, name, email, phone] = line.split(',');
-      return {
-        id: Number(id),
-        name,
-        email,
-        phone,
-      };
-    });
+  constructor() {
+    const content = fs.readFileSync("users.csv", "utf-8");
+    this.lines = content.split("\n").slice(1); // skip header
   }
 
-  *[Symbol.iterator](): Iterator<UserData> {
-    for (const user of this.data) {
-      yield user;
+  *[Symbol.iterator]() {
+    for (const line of this.lines) {
+      yield line;
     }
   }
 }

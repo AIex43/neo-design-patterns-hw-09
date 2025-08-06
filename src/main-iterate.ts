@@ -1,18 +1,18 @@
-import { CsvIterator } from './iterators/CsvIterator';
-import { JsonIterator } from './iterators/JsonIterator';
-import { XmlIterator } from './iterators/XmlIterator';
+import { CsvIterator } from "./iterators/CsvIterator";
+import { JsonIterator } from "./iterators/JsonIterator";
+import { XmlIterator } from "./iterators/XmlIterator";
 
-console.log('--- CSV ---');
-for (const user of new CsvIterator('./users.csv')) {
+console.log("--- CSV ---");
+for (const row of new CsvIterator()) {
+  console.log(row);
+}
+
+console.log("\n--- JSON ---");
+for (const user of new JsonIterator()) {
   console.log(user);
 }
 
-console.log('--- JSON ---');
-for (const user of new JsonIterator('./users.json')) {
-  console.log(user);
-}
-
-console.log('--- XML ---');
-for (const user of new XmlIterator('./users.xml')) {
+console.log("\n--- XML ---");
+for (const user of new XmlIterator()) {
   console.log(user);
 }

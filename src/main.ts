@@ -1,13 +1,10 @@
-import { CsvExporter } from './exporters/CsvExporter';
-import { JsonExporter } from './exporters/JsonExporter';
-import { XmlExporter } from './exporters/XmlExporter';
+import { users } from "./data/UserData";
+import { createExporters } from "./exporters/Exporter";
 
-const exporters = [
-    new CsvExporter(),
-    new JsonExporter(),
-    new XmlExporter()
-];
+async function main() {
+  const exporters = createExporters(users);
+  await Promise.all(exporters.map(exporter => exporter.export()));
+  console.log("Export completed.");
+}
 
-(async () => {
-    await Promise.all(exporters.map(exporter => exporter.export()));
-})(); 
+main();

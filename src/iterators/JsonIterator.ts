@@ -1,17 +1,16 @@
-import fs from 'fs';
-import { UserData } from '../data/UserData';
+import fs from "fs";
 
-export class JsonIterator implements Iterable<UserData> {
-  private data: UserData[];
+export class JsonIterator implements Iterable<any> {
+  private data: any[];
 
-  constructor(path: string) {
-    const content = fs.readFileSync(path, 'utf-8');
+  constructor() {
+    const content = fs.readFileSync("users.json", "utf-8");
     this.data = JSON.parse(content);
   }
 
-  *[Symbol.iterator](): Iterator<UserData> {
-    for (const user of this.data) {
-      yield user;
+  *[Symbol.iterator]() {
+    for (const item of this.data) {
+      yield item;
     }
   }
 }

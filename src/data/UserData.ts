@@ -1,6 +1,12 @@
-export interface UserData {
-    id: number;
-    name: string;
-    email: string;
-    phone: string;
-} 
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+}
+
+export const users: User[] = [
+  { id: 1, name: "Alice", email: "alice@example.com", phone: "123-456" },
+  { id: 2, name: "Bob", email: "bob@example.com", phone: "234-567" },
+  { id: 3, name: "Charlie", email: "charlie@example.com", phone: "345-678" },
+];

@@ -1,25 +1,23 @@
-import fs from 'fs';
-import { xml2js } from 'xml-js';
-import { UserData } from '../data/UserData';
+import fs from "fs";
+import { DOMParser } from "xmldom";
 
-export class XmlIterator implements Iterable<UserData> {
-  private data: UserData[];
+export class XmlIterator implements Iterable<any> {
+  private users: Element[];
 
-  constructor(path: string) {
-    const content = fs.readFileSync(path, 'utf-8');
-    const parsed = xml2js(content, { compact: true }) as any;
-
-    this.data = (parsed.users.user || []).map((u: any) => ({
-      id: Number(u.id._text),
-      name: u.name._text,
-      email: u.email._text,
-      phone: u.phone._text,
-    }));
+  constructor() {
+    const content = fs.readFileSync("users.xml", "utf-8");
+    const doc = new DOMParser().parseFromString(content, "text/xml");
+    this.users = Array.from(doc.getElementsByTagName("user"));
   }
 
-  *[Symbol.iterator](): Iterator<UserData> {
-    for (const user of this.data) {
-      yield user;
+  *[Symbol.iterator]() {
+    for (const user of this.users) {
+      yield {
+        id: user.getElementsByTagName("id")[0].textContent,
+        name: user.getElementsByTagName("name")[0].textContent,
+        email: user.getElementsByTagName("email")[0].textContent,
+        phone: user.getElementsByTagName("phone")[0].textContent
+      };
     }
   }
 }
