@@ -1,9 +1,12 @@
-import { Exporter } from '../interfaces/Exporter';
-import { UserData } from '../data/UserData';
-import fs from 'fs';
+import { DataExporter } from './DataExporter';
+import fs from 'fs/promises';
 
-export class JsonExporter extends Exporter {
-  protected convert(data: UserData[]): string {
-    return JSON.stringify(data, null, 2);
+export class JsonExporter extends DataExporter {
+  protected render(): void {
+    this.result = JSON.stringify(this.data, null, 2);
+  }
+
+  protected async save(): Promise<void> {
+    await fs.writeFile('users.json', this.result, 'utf-8');
   }
 }

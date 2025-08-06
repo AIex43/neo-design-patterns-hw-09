@@ -17,6 +17,7 @@
   "dependencies": {
     "@types/node-fetch": "^2.6.12",
     "fast-xml-parser": "^5.2.1",
-    "node-fetch": "^2.7.0"
+    "node-fetch": "^2.7.0",
+    "xml-js": "^1.6.11"
   }
 }

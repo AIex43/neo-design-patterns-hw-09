@@ -1,24 +1,25 @@
 import fs from 'fs';
+import { xml2js } from 'xml-js';
 import { UserData } from '../data/UserData';
-import { parseString } from 'xml2js';
 
 export class XmlIterator implements Iterable<UserData> {
-  private data: UserData[] = [];
+  private data: UserData[];
 
   constructor(path: string) {
     const content = fs.readFileSync(path, 'utf-8');
-    parseString(content, (err, result) => {
-      if (err) throw err;
-      this.data = result.users.user.map((u: any) => ({
-        id: +u.id[0],
-        name: u.name[0],
-        email: u.email[0],
-        phone: u.phone[0],
-      }));
-    });
+    const parsed = xml2js(content, { compact: true }) as any;
+
+    this.data = (parsed.users.user || []).map((u: any) => ({
+      id: Number(u.id._text),
+      name: u.name._text,
+      email: u.email._text,
+      phone: u.phone._text,
+    }));
   }
 
-  *[Symbol.iterator]() {
-    for (const user of this.data) yield user;
+  *[Symbol.iterator](): Iterator<UserData> {
+    for (const user of this.data) {
+      yield user;
+    }
   }
 }

@@ -9,7 +9,9 @@ export class JsonIterator implements Iterable<UserData> {
     this.data = JSON.parse(content);
   }
 
-  *[Symbol.iterator]() {
-    for (const user of this.data) yield user;
+  *[Symbol.iterator](): Iterator<UserData> {
+    for (const user of this.data) {
+      yield user;
+    }
   }
 }

@@ -6,14 +6,22 @@ export class CsvIterator implements Iterable<UserData> {
 
   constructor(path: string) {
     const content = fs.readFileSync(path, 'utf-8');
-    const lines = content.trim().split('\n').slice(1); // remove header
+    const lines = content.trim().split('\n').slice(1); // пропускаємо заголовок
+
     this.data = lines.map(line => {
       const [id, name, email, phone] = line.split(',');
-      return { id: +id, name, email, phone };
+      return {
+        id: Number(id),
+        name,
+        email,
+        phone,
+      };
     });
   }
 
-  *[Symbol.iterator]() {
-    for (const user of this.data) yield user;
+  *[Symbol.iterator](): Iterator<UserData> {
+    for (const user of this.data) {
+      yield user;
+    }
   }
 }

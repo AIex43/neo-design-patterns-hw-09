@@ -1,36 +1,23 @@
-import axios from 'axios';
-import fs from 'fs';
-import { UserData } from '../data/UserData';
+import { Exporter } from './Exporter';
 
-export abstract class DataExporter {
-  protected data: UserData[] = [];
+export abstract class DataExporter implements Exporter {
+  protected data: any[] = [];
   protected result: string = '';
 
   async export(): Promise<void> {
-    await this.load();
-    this.transform();
-    this.beforeRender();
+    this.loadData();
     this.render();
-    this.afterRender();
     await this.save();
   }
 
-  protected async load(): Promise<void> {
-    const res = await axios.get('https://jsonplaceholder.typicode.com/users');
-    this.data = res.data.map((user: any) => ({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-    }));
+  protected loadData(): void {
+    // У реальному проєкті тут можна було б завантажувати з БД або API.
+    this.data = [
+      { id: 1, name: "Alice", email: "alice@example.com", phone: "123456789" },
+      { id: 2, name: "Bob", email: "bob@example.com", phone: "987654321" },
+    ];
   }
 
-  protected transform(): void {
-    this.data.sort((a, b) => a.name.localeCompare(b.name));
-  }
-
-  protected beforeRender(): void {}
   protected abstract render(): void;
-  protected afterRender(): void {}
   protected abstract save(): Promise<void>;
 }
